@@ -1,26 +1,14 @@
 // Write Javascript code here!
 
 const $app = document.getElementById('app');
-const contexts = document.querySelectorAll('.context');
+const $items = document.querySelectorAll('.item');
 
-const toggleContextMenu = e => {
-  const target = e.target;
-  const isContextShowed = [...contexts].some(
-    $context => $context.style.display === 'block'
-  );
-  const showedContext = [...contexts].find(
-    $context => $context.style.display === 'block'
-  );
+$app.addEventListener('click', e => {
+  const targetEl = e.target;
 
-  if (isContextShowed) {
-    showedContext.style.display = 'none';
-    showedContext.parentNode.classList.remove('open');
-  }
+  if (targetEl.matches('.context')) return;
 
-  if (target.matches('.item') && showedContext !== target.firstElementChild) {
-    target.firstElementChild.style.display = 'block';
-    target.classList.add('open');
-  }
-};
+  if (targetEl.matches('.item')) targetEl.classList.toggle('open');
 
-$app.addEventListener('click', toggleContextMenu);
+  $items.forEach($item => $item !== targetEl && $item.classList.remove('open'));
+});
