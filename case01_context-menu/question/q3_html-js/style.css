@@ -41,7 +41,7 @@ details p {
   right: 10px;
 }
 
-summary:after {
+summary::after {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -51,12 +51,15 @@ summary:after {
   background-color: #fff;
 }
 
-summary:hover:after {
-  content: 'open'
+summary:hover::after {
+  content: 'open';
 }
 
-details[open] summary:after {
+details[open] summary::after {
   content: 'close';
 }
 
 /* do something here */
+details[open] p {
+  display: block;
+}
