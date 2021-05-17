@@ -1,33 +1,33 @@
-import React, { useRef, useState, useEffect } from "react";
-import "./style.css";
-import Detail from "./Detail";
-import dummyData from "./dummyData";
-import ContextPortal from "./ContextPortal";
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import './style.css';
+import Detail from './Detail';
+import dummyData from './dummyData';
+import ContextPortal from './ContextPortal';
 
 export default function App() {
   const [openedIndex, setOpen] = useState(null);
   const detailRefs = useRef([]);
 
-  const togglePopover = index => e => {
+  const togglePopover = useCallback(index => e => {
     e.preventDefault();
     e.stopPropagation();
     setOpen(e.target.parentElement.open ? null : index);
-  };
+  });
 
-  const closeAll = () => {
+  const closeAll = useCallback(() => {
     setOpen(null);
-  };
+  });
 
   useEffect(() => {
-    document.body.addEventListener("click", closeAll);
+    document.body.addEventListener('click', closeAll);
     return () => {
-      document.body.removeEventListener("click", closeAll);
+      document.body.removeEventListener('click', closeAll);
     };
   }, []);
 
   return (
     <>
-      <div className="wrapper">
+      <div className='wrapper'>
         {dummyData.map(({ text, context }, i) => (
           <Detail
             key={`detail${i}`}
@@ -40,7 +40,10 @@ export default function App() {
         ))}
       </div>
 
-      <ContextPortal /* 채워 넣으세요. */ />
+      <ContextPortal
+        target={detailRefs?.current[openedIndex]}
+        children={<p>{dummyData[openedIndex]?.context}</p>}
+      />
     </>
   );
 }
