@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import "./style.css";
-import Detail from "./Detail";
-import dummyData from "./dummyData";
+import React, { useState, useEffect } from 'react';
+import './style.css';
+import Detail from './Detail';
+import dummyData from './dummyData';
 
 export default function App() {
   const [openedIndex, setOpen] = useState(null);
@@ -10,21 +10,23 @@ export default function App() {
     e.preventDefault();
     e.stopPropagation();
     // do something here.
+    setOpen(openedIndex === index ? null : index);
   };
 
-  const closeAll = (e) => {
+  const closeAll = e => {
     // do something here.
+    if (!e.target.matches('p')) setOpen(null);
   };
 
   useEffect(() => {
-    document.body.addEventListener("click", closeAll);
+    document.body.addEventListener('click', closeAll);
     return () => {
-      document.body.removeEventListener("click", closeAll);
+      document.body.removeEventListener('click', closeAll);
     };
   });
 
   return (
-    <div className="wrapper">
+    <div className='wrapper'>
       {dummyData.map(({ text, context }, i) => (
         <Detail
           key={`detail${i}`}
